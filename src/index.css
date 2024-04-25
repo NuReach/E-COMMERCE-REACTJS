@@ -1,0 +1,43 @@
+@tailwind base;
+  @tailwind components;
+  @tailwind utilities;
+  .magra-regular {
+    font-family: "Magra", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  .magra-bold {
+    font-family: "Magra", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+  }
+
+  h1{
+    font-family: "Magra", sans-serif;
+    font-weight: 700;
+    font-size: 30px;
+    font-style: normal;
+  }
+
+  h3{
+    font-family: "Magra", sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    font-style: normal;
+  }
+  h5{
+    font-family: "Magra", sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    font-style: normal;
+  }
+
+  p{
+    font-family: "Magra", sans-serif;
+    font-weight: 300;
+    font-size: 15px;
+    font-style: normal;
+  }
+
+  
