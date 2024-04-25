@@ -3,22 +3,40 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import RatingStar from '@/components/ui/myComponents/RatingStar';
 import UserNavbar from '@/components/ui/myComponents/UserNavbar';
+import { Store } from '@/utils/Store';
 import { useQuery } from '@tanstack/react-query';
-import React from 'react'
+import React, { useContext } from 'react'
+import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom'
 
 export default function ProductPage() {
-    const {slug} = useParams();
+    const {id} = useParams();
     const {isLoading , isError, data:product} = useQuery({ 
-      queryKey: ['product',{slug}], 
-      queryFn: ()=>getProductBySlug(slug) 
+      queryKey: ['product',{id}], 
+      queryFn: ()=>getProductBySlug(id) 
     });
 
-console.log(product);
-  
+    const { state, dispatch: ctxDispatch } = useContext(Store);
+    const addToCartHandler = () => {
+        const { cart } = state;
+        const existItem = cart.cartItems.find((x) => x.id === product.id);
+        const quantity = existItem ? existItem.quantity + 1 : 1;
+        if (product.countInStock < quantity) {
+            window.alert('Sorry. Product is out of stock');
+            return;
+          }
+        ctxDispatch({
+            type: 'CART_ADD_ITEM',
+            payload: { ...product, quantity },
+        });
+    };
+
   return (
     <div>
         <UserNavbar />
+        <Helmet>
+            <title>Product Page</title>  
+        </Helmet>
         <div className='flex flex-wrap justify-center items-center gap-3 h-screen'>
             <div>
                 <img className='w-96' src={product?.image} alt="" />
@@ -49,7 +67,7 @@ console.log(product);
                         }
                     </div>
                     <div>
-                        <Button className='bg-yellow-600 hover:bg-yellow-700'>ADD TO CART</Button>
+                        <Button onClick={addToCartHandler} className='bg-yellow-600 hover:bg-yellow-700'>ADD TO CART</Button>
                     </div>
                 </div>
             </div>
