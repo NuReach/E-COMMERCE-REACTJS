@@ -33,7 +33,12 @@ export default function ProductCard({data}) {
           <RatingStar rating={data.rating} reviews={data.numReviews}/>
         </Link>
         <div className='w-full flex justify-end'>
-          <Button className='w-32 magra-regular' onClick={addToCartHandler} variant="outline">ADD TO CART</Button>
+          {
+            data.countInStock == 0 ?
+              <Button className=' magra text-xs' disabled variant="destructive">OUT OF STOCK</Button>
+              :
+              <Button className=' magra text-xs' onClick={addToCartHandler} variant="outline">ADD TO CART</Button>
+          }
         </div>
       </div>
     </Card>

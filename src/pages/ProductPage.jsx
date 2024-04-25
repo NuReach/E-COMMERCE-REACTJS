@@ -1,4 +1,4 @@
-import { getProductBySlug } from '@/api/ProductsApi';
+import { getProductByID } from '@/api/ProductsApi';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import RatingStar from '@/components/ui/myComponents/RatingStar';
@@ -13,7 +13,7 @@ export default function ProductPage() {
     const {id} = useParams();
     const {isLoading , isError, data:product} = useQuery({ 
       queryKey: ['product',{id}], 
-      queryFn: ()=>getProductBySlug(id) 
+      queryFn: ()=>getProductByID(id) 
     });
 
     const { state, dispatch: ctxDispatch } = useContext(Store);

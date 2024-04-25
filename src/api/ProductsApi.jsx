@@ -12,7 +12,7 @@ export const getAllProductsApi = async () => {
     }
 }
 
-export const getProductBySlug = async (id) => {
+export const getProductByID = async (id) => {
     try {
         const respone = await axios.get(`${proxy}/api/products/${id}`);
         console.log(respone.data);
