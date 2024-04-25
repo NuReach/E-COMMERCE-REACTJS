@@ -2,6 +2,12 @@
   @tailwind components;
   @tailwind utilities;
 
+
+  body{
+    font-family: "Magra", sans-serif;
+    font-style: normal;
+  }
+
   .magra{
     font-family: "Magra", sans-serif;
     font-style: normal;
