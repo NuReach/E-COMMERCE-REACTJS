@@ -7,18 +7,19 @@ import CartPage from "./pages/CartPage"
 import SigninPage from "./pages/SigninPage"
 import RegisterPage from "./pages/RegisterPage"
 import { Toaster } from "sonner"
-import { HelmetProvider } from "react-helmet-async"
+import ShippingPage from "./pages/ShippingPage"
 
 function App() {
   const queryClient = new QueryClient()
   return (
     <QueryClientProvider client={queryClient}>
-    <Toaster />
+    <Toaster position="bottom-left" />
     <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/products/:id" element={<ProductPage />} />
           <Route path="/products/cart" element={<CartPage />} />
+          <Route path="/shipping" element={<ShippingPage />} />
           <Route path="/signin" element={<SigninPage />} />
           <Route path="/register" element={<RegisterPage />} />
         </Routes> 

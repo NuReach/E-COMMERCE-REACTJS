@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -13,7 +14,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { toast } from "@/components/ui/use-toast";
+import { useMutation } from "@tanstack/react-query";
+import { signinApi } from "@/api/UserApi";
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { Store } from "@/utils/Store";
 
 const FormSchema = z.object({
   email: z.string().email({
@@ -25,6 +30,9 @@ const FormSchema = z.object({
 });
 
 export function InputForm() {
+
+  const navigate = useNavigate();
+
   const form = useForm({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -33,9 +41,29 @@ export function InputForm() {
     },
   });
 
-  function onSubmit(data) {
-    console.log(data);
+  const onSubmit = async (data) => {
+    await signinMutation(data);
   }
+
+  const { state , dispatch : ctxDispatch } = useContext(Store);
+   
+
+  const { mutateAsync : signinMutation } = useMutation({
+    mutationFn : signinApi,
+    onSuccess : (data) => {
+      console.log(data);
+      localStorage.setItem("userInfo",JSON.stringify(data));
+      ctxDispatch({
+        type: 'USER_SIGNIN',
+        payload: { data },
+    });
+      navigate(`/`);
+      toast.success("Signin Successfully");
+    },
+    onError : (err) => {
+      toast.error(err.response.data.message);
+    }
+  })
 
   return (
     <Form {...form}>

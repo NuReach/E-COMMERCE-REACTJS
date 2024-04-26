@@ -7,6 +7,7 @@ import axios from 'axios';
 import React, { useContext } from 'react'
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 export default function CartPage() {
     const { state , dispatch : ctxDispatch } = useContext(Store);
@@ -17,7 +18,7 @@ export default function CartPage() {
         const id = item._id;
         const {data} = await axios.get(`http://localhost:3000/api/products/${id}`)
           if (data.countInStock < quantity) {
-            window.alert('Sorry. Product is out of stock');
+            toast.error("Product Out Of Stock");
             return;
           }
           ctxDispatch({
@@ -34,7 +35,7 @@ export default function CartPage() {
     };
 
     const checkOutBtn = ()=>{
-        navigate(`/signin?redirect=/shipping`);
+        navigate(`/shipping`);
     }
   return (
     <HelmetProvider>
@@ -61,7 +62,7 @@ export default function CartPage() {
                                             <div className="flex items-center">
                                                 <button disabled={item.quantity == 1} onClick={()=>updateCartItem(item,item.quantity-1)}  className="border rounded-md py-2 px-4 mr-2">-</button>
                                                 <span className="text-center w-8">{item.quantity}</span>
-                                                <button disabled={item.quantity == item.countInStock} onClick={()=>updateCartItem(item,item.quantity+1)} className="border rounded-md py-2 px-4 ml-2">+</button>
+                                                <button  onClick={()=>updateCartItem(item,item.quantity+1)} className="border rounded-md py-2 px-4 ml-2">+</button>
                                             </div>
                                             <div className='flex gap-3'>
                                                 <h5>Total : </h5>
@@ -102,7 +103,7 @@ export default function CartPage() {
                                         <div className="flex items-center">
                                             <button disabled={item.quantity == 1} onClick={()=>updateCartItem(item,item.quantity-1)} className="border rounded-md py-2 px-4 mr-2">-</button>
                                             <span className="text-center w-8">{item.quantity}</span>
-                                            <button disabled={item.quantity == item.countInStock} onClick={()=>updateCartItem(item,item.quantity+1)} className="border rounded-md py-2 px-4 ml-2">+</button>
+                                            <button  onClick={()=>updateCartItem(item,item.quantity+1)} className="border rounded-md py-2 px-4 ml-2">+</button>
                                         </div>
                                         </td>
                                         <td className="py-4">${item.price * item.quantity}</td>
@@ -131,7 +132,7 @@ export default function CartPage() {
                         <hr className="my-2" />
                         <div className="flex justify-between mb-2">
                             <span className="font-semibold">Total</span>
-                            <span className="font-semibold">$21.98</span>
+                            <span className="font-semibold">${cart?.cartItems.reduce((a,c)=>a + c.quantity * c.price , 0)}</span>
                         </div>
                         <button onClick={checkOutBtn} className="bg-orange-600 text-white py-2 px-4 rounded-lg mt-4 w-full">Checkout</button>
                         </div>

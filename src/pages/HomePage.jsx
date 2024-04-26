@@ -26,13 +26,11 @@ export default function HomePage() {
             </div>
         </div>
   }  
-
-  console.log(products);
     
   return (
     <div>
         <UserNavbar />
-        <div className='px-24 py-9'>
+        <div className='px-20 py-9'>
             <h3>Featur Product</h3>
             <div className='p-3 grid gap-9 items-center justify-items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-9'>
               {

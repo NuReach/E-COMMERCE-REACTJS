@@ -4,6 +4,7 @@ import { Button } from '../button'
 import { Link } from 'react-router-dom'
 import RatingStar from './RatingStar'
 import { Store } from '@/utils/Store'
+import { toast } from 'sonner'
 
 export default function ProductCard({data}) {
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -12,7 +13,7 @@ export default function ProductCard({data}) {
     const existItem = cart.cartItems.find((x) => x._id === data._id);
     const quantity = existItem ? existItem.quantity + 1 : 1;
     if (data.countInStock < quantity) {
-        window.alert('Sorry. Product is out of stock');
+        toast.error("Product Out Of Stock");
         return;
       }
     ctxDispatch({
