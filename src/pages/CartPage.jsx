@@ -13,7 +13,7 @@ export default function CartPage() {
     const navigate = useNavigate();
 
     const updateCartItem = async (item,quantity) =>{
-        const id = item.id;
+        const id = item._id;
         const {data} = await axios.get(`http://localhost:3000/api/products/${id}`)
           if (data.countInStock < quantity) {
             window.alert('Sorry. Product is out of stock');

@@ -9,7 +9,7 @@ export default function ProductCard({data}) {
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const addToCartHandler = () => {
     const { cart } = state;
-    const existItem = cart.cartItems.find((x) => x.id === data.id);
+    const existItem = cart.cartItems.find((x) => x._id === data._id);
     const quantity = existItem ? existItem.quantity + 1 : 1;
     if (data.countInStock < quantity) {
         window.alert('Sorry. Product is out of stock');
@@ -23,10 +23,10 @@ export default function ProductCard({data}) {
   return (
     <Card className="w-[270px] p-3 ">
       <div  className='flex flex-col '>
-        <Link to={`/products/${data.id}`}>
+        <Link to={`/products/${data._id}`}>
           <img className='w-full h-80 object-cover' src={data.image} alt="" />
         </Link>
-        <Link to={`/products/${data.slug}`} className='mt-3'>
+        <Link to={`/products/${data._id}`} className='mt-3'>
           <CardTitle><div className='text-lg capitalize'>{data.name}</div></CardTitle>
           <CardDescription className='capitalize'>{data.slug}</CardDescription>
           <CardTitle className='text-lg'>{data.price}$</CardTitle>

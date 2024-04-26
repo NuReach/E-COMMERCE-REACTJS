@@ -19,7 +19,7 @@ export default function ProductPage() {
     const { state, dispatch: ctxDispatch } = useContext(Store);
     const addToCartHandler = () => {
         const { cart } = state;
-        const existItem = cart.cartItems.find((x) => x.id === product.id);
+        const existItem = cart.cartItems.find((x) => x._id === product._id);
         const quantity = existItem ? existItem.quantity + 1 : 1;
         if (product.countInStock < quantity) {
             window.alert('Sorry. Product is out of stock');

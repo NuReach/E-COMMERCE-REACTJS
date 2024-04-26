@@ -27,7 +27,7 @@ export default function HomePage() {
         </div>
   }  
 
-  console.log(isLoading);
+  console.log(products);
     
   return (
     <div>
