@@ -6,11 +6,14 @@ import ProductPage from "./pages/ProductPage"
 import CartPage from "./pages/CartPage"
 import SigninPage from "./pages/SigninPage"
 import RegisterPage from "./pages/RegisterPage"
+import { Toaster } from "sonner"
+import { HelmetProvider } from "react-helmet-async"
 
 function App() {
   const queryClient = new QueryClient()
   return (
     <QueryClientProvider client={queryClient}>
+    <Toaster />
     <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomePage />} />

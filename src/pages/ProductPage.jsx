@@ -6,7 +6,7 @@ import UserNavbar from '@/components/ui/myComponents/UserNavbar';
 import { Store } from '@/utils/Store';
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react'
-import { Helmet } from 'react-helmet';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { useParams } from 'react-router-dom'
 
 export default function ProductPage() {
@@ -32,11 +32,11 @@ export default function ProductPage() {
     };
 
   return (
-    <div>
-        <UserNavbar />
+    <HelmetProvider>
         <Helmet>
-            <title>Product Page</title>  
+            <title>{product ? product.name : "Product"}</title>
         </Helmet>
+        <UserNavbar />
         <div className='flex flex-wrap justify-center items-center gap-3 h-screen'>
             <div>
                 <img className='w-96' src={product?.image} alt="" />
@@ -72,6 +72,6 @@ export default function ProductPage() {
                 </div>
             </div>
         </div>
-    </div>
+    </HelmetProvider>
   )
 }

@@ -5,6 +5,7 @@ import { Store } from '@/utils/Store';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import React, { useContext } from 'react'
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 
 export default function CartPage() {
@@ -36,9 +37,12 @@ export default function CartPage() {
         navigate(`/signin?redirect=/shipping`);
     }
   return (
-    <div>
+    <HelmetProvider>
+        <Helmet>
+            <title>{"Cart"}</title>
+        </Helmet>
         <UserNavbar />
-        <div className=' px-1 md:px-9 lg:px-24 py-9 magra'>
+        <div className=' px-3 md:px-9 lg:px-24 py-9 magra'>
             <h3>Shopping Cart</h3>
                 <div className="flex flex-col md:flex-row gap-4">
                     <div className="md:w-3/4">
@@ -134,6 +138,6 @@ export default function CartPage() {
                     </div>
                     </div>
         </div>
-    </div>
+    </HelmetProvider>
   )
 }
