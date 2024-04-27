@@ -120,9 +120,11 @@ export default function ShippingForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full">
-          Submit
-        </Button>
+        <div className="w-full flex justify-end">
+          <Button type="submit" className=" w-32">
+            Next
+          </Button>
+        </div>
       </form>
     </Form>
   );

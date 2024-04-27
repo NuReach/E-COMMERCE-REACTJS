@@ -9,7 +9,6 @@ export default function UserNavbar() {
   const { state } = useContext(Store);
   const { cart } = state;
   const { userInfo } = state;
- console.log(userInfo);
   return (
     <div className='bg-black p-3 flex justify-between items-center px-9'>
         <Link to={`/`}>

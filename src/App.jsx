@@ -8,6 +8,7 @@ import SigninPage from "./pages/SigninPage"
 import RegisterPage from "./pages/RegisterPage"
 import { Toaster } from "sonner"
 import ShippingPage from "./pages/ShippingPage"
+import PaymentPage from "./pages/PaymentPage"
 
 function App() {
   const queryClient = new QueryClient()
@@ -22,6 +23,7 @@ function App() {
           <Route path="/shipping" element={<ShippingPage />} />
           <Route path="/signin" element={<SigninPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/payment" element={<PaymentPage />} />
         </Routes> 
     </BrowserRouter>
     <ReactQueryDevtools initialIsOpen={false} />
