@@ -4,9 +4,12 @@ import { Card, CardDescription, CardTitle } from '@/components/ui/card';
 import UserNavbar from '@/components/ui/myComponents/UserNavbar';
 import { Store } from '@/utils/Store';
 import { UseAuthRedirect } from '@/utils/UseAuthRedirect';
-import { useQuery } from '@tanstack/react-query';
+import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import axios from 'axios';
 import { AlertCircle, Check, Terminal } from 'lucide-react';
 import React, { useContext } from 'react'
+import { useEffect } from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 
@@ -15,10 +18,88 @@ export default function OrderDetailPage() {
   const {id} = useParams();
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { userInfo } = state;
+  const [{isPending} , paypalDispatch] = usePayPalScriptReducer();
+  const queryClient = useQueryClient();
+
   const {isLoading , isError, data:order} = useQuery({ 
     queryKey: ['order',{id}], 
     queryFn: ()=>getOrderByIdApi(id,userInfo.token) 
   });
+
+  const {data:payPalId} = useQuery({ 
+    queryKey: ['paypal'], 
+    queryFn: async ()=>{
+      const response = await axios.get(`http://localhost:3000/api/key/paypal`)
+      return response.data;
+    } 
+  });
+
+  const { mutateAsync : updateIsPaidMutation } = useMutation({
+    mutationFn : async (details)=>{
+      console.log(details);
+      try {
+        const response = await axios.put(`http://localhost:3000/api/orders/${id}`,
+          details,
+          {
+            headers : {
+              Authorization : `Bearer ${userInfo.token}`
+          }
+          }
+        )   
+      } catch (error) {
+        throw error;
+      }
+    },
+    onSuccess : () => {
+      queryClient.invalidateQueries(['order']);
+      toast.success("Paid Successfully");
+    },
+    onError : (err) => {
+      toast.error(err.response.data.message);
+    }
+  })
+
+
+  function createOrder(data, actions) {
+    return actions.order
+      .create({
+        purchase_units: [
+          {
+            amount: { value: order?.totalPrice },
+          },
+        ],
+      })
+      .then((orderID) => {
+        return orderID;
+      });
+  }
+
+  function onApprove(data, actions) {
+    return actions.order.capture().then(async function (details) {
+     await updateIsPaidMutation(details);
+    });
+  }
+  function onError(err) {
+    toast.error(getError(err));
+  }
+
+  useEffect(()=>{
+    const loadPaypalScript = ()=> {
+      paypalDispatch({
+        type : 'resetOption',
+        value : {
+          'client_id' : payPalId,
+          currency : 'USD'
+        }
+      });
+      paypalDispatch({
+        type : 'setLoadingStatus',
+        value : 'pending'
+      })
+    }
+    loadPaypalScript();
+  },[paypalDispatch])
+
   if (isLoading) {
     return <p>Loading..</p>
   }
@@ -28,8 +109,8 @@ export default function OrderDetailPage() {
         <title>Order Detail</title>
     </Helmet>
     <UserNavbar />
-    <div className='flex flex-col justify-start items-center h-screen p-3'>
-        <Card className=' w-full sm:w-96 lg:w-1/2 px-3 py-9'>
+    <div className='flex flex-col justify-start items-center h-screen p-3 '>
+        <Card className=' w-full sm:w-96 lg:w-1/2 px-3 py-9 '>
             <div>
                 <CardTitle>Your Order Detail </CardTitle>
                 <CardDescription>Order ID : {order?._id} </CardDescription>
@@ -72,7 +153,7 @@ export default function OrderDetailPage() {
                         </div>
                         {
                           order?.isPaid ? 
-                          <Alert>
+                          <Alert className='border-green-600 bg-green-100'>
                             <Check className="h-4 w-4" />
                             <AlertTitle>Already Paid</AlertTitle>
                           </Alert>
@@ -120,10 +201,22 @@ export default function OrderDetailPage() {
                             <span className="font-semibold text-lg">${order?.totalPrice.toFixed(2)}</span>
                         </div>
                     </Card>
+                    <Card className='w-full mt-3'>
+                       {
+                        !order?.isPaid &&
+                        <PayPalButtons
+                          createOrder={createOrder}
+                          onApprove={onApprove}
+                          onError={onError}
+                        >
+                        </PayPalButtons>
+                       } 
+                    </Card>
                 </div>
             </div>
         </Card>
     </div>
+
 </HelmetProvider>
   )
 }

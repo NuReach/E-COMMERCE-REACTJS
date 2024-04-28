@@ -32,7 +32,6 @@ export const getOrderByIdApi = async (id,token) => {
                 Authorization : `Bearer ${token}`
             }
         });
-        console.log(respone.data);
         return respone.data;
     } catch (error) {
         throw error;
