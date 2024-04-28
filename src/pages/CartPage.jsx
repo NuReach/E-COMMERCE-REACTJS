@@ -2,6 +2,7 @@ import { getProductByID } from '@/api/ProductsApi';
 import { Button } from '@/components/ui/button';
 import UserNavbar from '@/components/ui/myComponents/UserNavbar'
 import { Store } from '@/utils/Store';
+import { proxy } from '@/utils/Utils';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import React, { useContext } from 'react'
@@ -16,7 +17,7 @@ export default function CartPage() {
 
     const updateCartItem = async (item,quantity) =>{
         const id = item._id;
-        const {data} = await axios.get(`http://localhost:3000/api/products/${id}`)
+        const {data} = await axios.get(`${proxy}/api/products/${id}`)
           if (data.countInStock < quantity) {
             toast.error("Product Out Of Stock");
             return;

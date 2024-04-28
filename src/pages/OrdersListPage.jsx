@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button';
 import UserNavbar from '@/components/ui/myComponents/UserNavbar'
 import { Store } from '@/utils/Store';
 import { UseAuthRedirect } from '@/utils/UseAuthRedirect'
+import { proxy } from '@/utils/Utils';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import React, { useContext } from 'react'
@@ -16,7 +17,7 @@ export default function OrdersListPage() {
     queryKey: ['orders'], 
     queryFn: async ()=>{
         try {
-            const response = await axios.get(`http://localhost:3000/api/orders/user/items`,{
+            const response = await axios.get(`${proxy}/api/orders/user/items`,{
                 headers : {
                     Authorization : `Bearer ${userInfo.token}`
                 }

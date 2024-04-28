@@ -4,6 +4,7 @@ import { Card, CardDescription, CardTitle } from '@/components/ui/card';
 import UserNavbar from '@/components/ui/myComponents/UserNavbar';
 import { Store } from '@/utils/Store';
 import { UseAuthRedirect } from '@/utils/UseAuthRedirect';
+import { proxy } from '@/utils/Utils';
 import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
@@ -29,7 +30,7 @@ export default function OrderDetailPage() {
   const {data:payPalId} = useQuery({ 
     queryKey: ['paypal'], 
     queryFn: async ()=>{
-      const response = await axios.get(`http://localhost:3000/api/key/paypal`)
+      const response = await axios.get(`${proxy}/api/key/paypal`)
       return response.data;
     } 
   });
@@ -38,7 +39,7 @@ export default function OrderDetailPage() {
     mutationFn : async (details)=>{
       console.log(details);
       try {
-        const response = await axios.put(`http://localhost:3000/api/orders/${id}`,
+        const response = await axios.put(`${proxy}/api/orders/${id}`,
           details,
           {
             headers : {

@@ -33,6 +33,9 @@ const FormSchema = z.object({
     email: z.string().email({
         message: "Invalid email address.",
     }),
+    current_password: z.string().min(6, {
+      message: "Current Password must be at least 6 characters.",
+    }),
     password: z.string().min(6, {
         message: "Password must be at least 6 characters.",
     }),
@@ -53,6 +56,7 @@ const FormSchema = z.object({
     defaultValues: {
       username: userInfo?.name,
       email: userInfo?.email,
+      current_password :"",
       password: "",
       confirmPassword: "",
     },
@@ -71,6 +75,7 @@ const FormSchema = z.object({
                 {
                     name : state.username,
                     email : state.email,
+                    current_password : state.current_password,
                     password : state.password,
                 },
                 {
@@ -122,6 +127,19 @@ const FormSchema = z.object({
               <FormLabel>Email</FormLabel>
               <FormControl>
                 <Input type="email" placeholder="Email" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="current_password"
+          render={({ field }) => (
+            <FormItem className="w-full">
+              <FormLabel>Current Password</FormLabel>
+              <FormControl>
+                <Input type="password" placeholder="Current Password" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

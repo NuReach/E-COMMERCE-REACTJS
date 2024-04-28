@@ -1,6 +1,6 @@
+import { proxy } from "@/utils/Utils";
 import axios from "axios";
 
-const proxy = "http://localhost:3000"
 
 
 
