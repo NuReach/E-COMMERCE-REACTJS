@@ -12,6 +12,7 @@ import PaymentPage from "./pages/PaymentPage"
 import PlaceOrderPage from "./pages/PlaceOrderPage"
 import OrderDetailPage from "./pages/OrderDetailPage"
 import OrdersListPage from "./pages/OrdersListPage"
+import ProfilePage from "./pages/ProfilePage"
 
 function App() {
   const queryClient = new QueryClient()
@@ -30,6 +31,7 @@ function App() {
           <Route path="/placeOrder" element={<PlaceOrderPage />} />
           <Route path="/orders/:id" element={<OrderDetailPage />} />
           <Route path="/orders" element={<OrdersListPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
         </Routes> 
     </BrowserRouter>
     <ReactQueryDevtools initialIsOpen={false} />

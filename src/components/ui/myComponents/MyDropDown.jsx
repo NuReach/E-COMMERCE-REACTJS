@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 export default function MyDropDown() {
   const [show,setShow] = useState(false);
   const { state , dispatch : ctxDispatch } = useContext(Store);
+  const {userInfo} = state;
   const btn = () => {
     setShow(!show);
   }
@@ -18,7 +19,7 @@ export default function MyDropDown() {
   return (
     <div className='cursor-pointer relative'>
         <div onClick={btn} className='flex justify-center items-center'>
-            <h5 className='text-white'>Reach</h5>
+            <h5 className='text-white'>{userInfo.name}</h5>
             <svg className='text-white' xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 512 512"><path d="M128 192l128 128 128-128z" fill="currentColor"/></svg>
         </div>
         <AnimatePresence>

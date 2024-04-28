@@ -50,12 +50,10 @@ export function InputForm() {
 
   const { mutateAsync : signinMutation } = useMutation({
     mutationFn : signinApi,
-    onSuccess : (data) => {
-      console.log(data);
-      localStorage.setItem("userInfo",JSON.stringify(data));
+    onSuccess : (res) => {
       ctxDispatch({
         type: 'USER_SIGNIN',
-        payload: { data },
+        payload:  res ,
     });
       navigate(`/`);
       toast.success("Signin Successfully");
