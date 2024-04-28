@@ -10,9 +10,9 @@ export default function UserNavbar() {
   const { cart } = state;
   const { userInfo } = state;
   return (
-    <div className='bg-black p-3 flex justify-between items-center px-9'>
+    <div className='bg-black p-3 flex justify-between items-center px-1 md:px-9'>
         <Link to={`/`}>
-          <h1 className='text-white'>Amazona</h1>
+          <h1 className='text-white text-lg sm:text-3xl'>Amazona</h1>
         </Link>
         <div className='flex gap-9'>
           <Link to={`/products/cart`} className='flex relative'>

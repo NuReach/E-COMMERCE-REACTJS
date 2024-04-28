@@ -41,7 +41,7 @@ export function PaymentForm() {
         type : "ADD_PAYMENT_METHOD",
         payload : data.paymentMethod
     })
-    navigate("/")
+    navigate("/placeOrder")
   };
 
   return (
@@ -77,7 +77,7 @@ export function PaymentForm() {
           )}
         />
         <div className="w-full flex justify-end mt-3">
-          <Button className="w-32" type="submit">Next</Button>
+          <Button className="w-32"   type="submit">Next</Button>
         </div>
       </form>
     </Form>

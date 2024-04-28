@@ -4,12 +4,14 @@ import { Button } from '@/components/ui/button';
 import RatingStar from '@/components/ui/myComponents/RatingStar';
 import UserNavbar from '@/components/ui/myComponents/UserNavbar';
 import { Store } from '@/utils/Store';
+import { UseAuthRedirect } from '@/utils/UseAuthRedirect';
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react'
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { useParams } from 'react-router-dom'
 
 export default function ProductPage() {
+    UseAuthRedirect();
     const {id} = useParams();
     const {isLoading , isError, data:product} = useQuery({ 
       queryKey: ['product',{id}], 

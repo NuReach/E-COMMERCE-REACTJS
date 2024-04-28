@@ -16,7 +16,7 @@ export default function PaymentPage() {
         <UserNavbar />
         <div className='flex flex-col justify-start items-center h-screen p-3'>
             <Progress className=' sm:w-96 lg:w-1/2  my-6' value={75} />
-            <Card className=' sm:w-96 lg:w-1/2 px-3 py-9'>
+            <Card className=' w-full sm:w-96 lg:w-1/2 px-3 py-9'>
                 <CardTitle>Select Your Payment </CardTitle>
                 <CardDescription>Please Select One Of This !!</CardDescription>
                 <div className='mt-3'>
