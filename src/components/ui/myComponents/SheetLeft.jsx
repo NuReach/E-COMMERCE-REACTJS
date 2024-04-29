@@ -42,6 +42,9 @@ export default function SheetLeft() {
       <Menu />
     </SheetTrigger>
     <SheetContent side='left'>
+        <div className='my-3'>
+          <SearchBar />
+        </div>
         <SheetHeader>
         <SheetTitle>Category</SheetTitle>
         <SheetDescription>
@@ -49,7 +52,6 @@ export default function SheetLeft() {
         </SheetDescription>
         </SheetHeader>
         <div className='mt-3 gap-3 flex flex-col'>
-          <SearchBar />
           {
             categories?.map((item,i)=>(
             <Link  to={`/search/result?category=${item}&&query=${query}&&min=${min}&&max=${max}&&rating=${rating}&&order=${order}&&page=${page}`} key={i} className='border-b-2 cursor-pointer text-sm'>

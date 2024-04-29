@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom"
+import { BrowserRouter, Navigate, Outlet, Route, Routes } from "react-router-dom"
 import HomePage from "./pages/HomePage"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
@@ -14,6 +14,8 @@ import OrderDetailPage from "./pages/OrderDetailPage"
 import OrdersListPage from "./pages/OrdersListPage"
 import ProfilePage from "./pages/ProfilePage"
 import SearchResultPage from "./pages/SearchResultPage"
+import { Store } from "./utils/Store"
+import { useContext } from "react"
 
 function App() {
   const queryClient = new QueryClient()
@@ -22,17 +24,19 @@ function App() {
     <Toaster position="bottom-left" />
     <BrowserRouter>
         <Routes>
+          <Route path="/signin" element={<SigninPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route element={<ProtectedRouter />}>
+            <Route path="/shipping" element={<ShippingPage />} />
+            <Route path="/payment" element={<PaymentPage />} />
+            <Route path="/placeOrder" element={<PlaceOrderPage />} />
+            <Route path="/orders/:id" element={<OrderDetailPage />} />
+            <Route path="/orders" element={<OrdersListPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+          </Route>
           <Route path="/" element={<HomePage />} />
           <Route path="/products/:id" element={<ProductPage />} />
           <Route path="/products/cart" element={<CartPage />} />
-          <Route path="/shipping" element={<ShippingPage />} />
-          <Route path="/signin" element={<SigninPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/payment" element={<PaymentPage />} />
-          <Route path="/placeOrder" element={<PlaceOrderPage />} />
-          <Route path="/orders/:id" element={<OrderDetailPage />} />
-          <Route path="/orders" element={<OrdersListPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
           <Route path="/search/result" element={<SearchResultPage />} />
         </Routes> 
     </BrowserRouter>
@@ -41,4 +45,11 @@ function App() {
   )
 }
 
-export default App
+export default App ;
+
+
+export const ProtectedRouter = () => {
+  const { state, dispatch: ctxDispatch } = useContext(Store);
+  const { userInfo } = state;
+  return userInfo ? <Outlet /> : <Navigate to='/signin' />
+}
