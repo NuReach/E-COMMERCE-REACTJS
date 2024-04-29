@@ -16,6 +16,7 @@ import ProfilePage from "./pages/ProfilePage"
 import SearchResultPage from "./pages/SearchResultPage"
 import { Store } from "./utils/Store"
 import { useContext } from "react"
+import Dashboard from "./pages/Admin/Dashboard"
 
 function App() {
   const queryClient = new QueryClient()
@@ -34,6 +35,10 @@ function App() {
             <Route path="/orders" element={<OrdersListPage />} />
             <Route path="/profile" element={<ProfilePage />} />
           </Route>
+          <Route element={<AdminProtectedRouter />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Route>
+          
           <Route path="/" element={<HomePage />} />
           <Route path="/products/:id" element={<ProductPage />} />
           <Route path="/products/cart" element={<CartPage />} />
@@ -52,4 +57,11 @@ export const ProtectedRouter = () => {
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { userInfo } = state;
   return userInfo ? <Outlet /> : <Navigate to='/signin' />
+}
+
+
+export const AdminProtectedRouter = () => {
+  const { state, dispatch: ctxDispatch } = useContext(Store);
+  const { userInfo } = state;
+  return userInfo?.isAdmin ? <Outlet /> : <Navigate to='/signin' />
 }

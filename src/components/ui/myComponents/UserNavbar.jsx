@@ -4,6 +4,7 @@ import { Badge } from '../badge';
 import { Link } from 'react-router-dom';
 import MyDropDown from './MyDropDown';
 import SheetLeft from './SheetLeft';
+import AdminDropDown from './AdminDropDown';
 
 
 export default function UserNavbar() {
@@ -32,7 +33,11 @@ export default function UserNavbar() {
               <h5 className='text-white'>Sign In</h5>
             </Link>
             :
-          <MyDropDown />
+            (userInfo?.isAdmin == true 
+            ?
+            <AdminDropDown />
+            :
+            <MyDropDown />)
           }
         </div>
     </div>
