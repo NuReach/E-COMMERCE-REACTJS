@@ -11,7 +11,6 @@ import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { useParams } from 'react-router-dom'
 
 export default function ProductPage() {
-    UseAuthRedirect();
     const {id} = useParams();
     const {isLoading , isError, data:product} = useQuery({ 
       queryKey: ['product',{id}], 

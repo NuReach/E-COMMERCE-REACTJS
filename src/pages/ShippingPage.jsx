@@ -9,7 +9,6 @@ import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 
 export default function ShippingPage() {
-  UseAuthRedirect();
   return (
     <HelmetProvider>
         <Helmet>

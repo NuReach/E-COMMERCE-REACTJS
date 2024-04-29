@@ -10,7 +10,6 @@ import { Helmet, HelmetProvider } from 'react-helmet-async'
 import { Link } from 'react-router-dom';
 
 export default function OrdersListPage() {
-  UseAuthRedirect();
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { userInfo } = state;
   const {isLoading , isError, data:orders} = useQuery({ 

@@ -8,7 +8,6 @@ import { Helmet, HelmetProvider } from 'react-helmet-async'
 import { useNavigate } from 'react-router-dom'
 
 export default function SigninPage() {
-  UseAuthRedirect();
   const navigate = useNavigate();
   const createAccBtn = ()=>{
     navigate(`/register`);

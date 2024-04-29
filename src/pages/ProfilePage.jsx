@@ -8,7 +8,6 @@ import React from 'react'
 import { Helmet, HelmetProvider } from 'react-helmet-async'
 
 export default function ProfilePage() {
-    UseAuthRedirect();
   return (
     <HelmetProvider>
         <Helmet>
