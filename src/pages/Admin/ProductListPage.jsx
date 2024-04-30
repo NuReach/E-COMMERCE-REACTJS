@@ -5,7 +5,7 @@ import UserNavbar from '@/components/ui/myComponents/UserNavbar'
 import { Store } from '@/utils/Store';
 import { UseAuthRedirect } from '@/utils/UseAuthRedirect'
 import { proxy } from '@/utils/Utils';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { Book, Edit, RemoveFormatting, Trash } from 'lucide-react';
 import React, { useContext } from 'react'
@@ -19,6 +19,7 @@ import {
     DialogTitle,
     DialogTrigger,
   } from "@/components/ui/dialog"
+import { toast } from 'sonner';
   
 
 export default function ProductListPage() {
@@ -28,6 +29,7 @@ export default function ProductListPage() {
     const navigate = useNavigate(); 
     const { state, dispatch: ctxDispatch } = useContext(Store);
     const { userInfo } = state;
+    const queryClient = useQueryClient();
     const {isLoading , isError, data:products} = useQuery({ 
     queryKey: ['products',{page}], 
     queryFn: async ()=>{
@@ -43,9 +45,31 @@ export default function ProductListPage() {
         }
     }
   });
-//   if (isLoading) {
-//     return <p>Loading...</p>
-//   }
+
+  const { mutateAsync : deleteItemMutation } = useMutation({
+    mutationFn : async (id)=>{
+      try {
+        const response = await axios.delete(`${proxy}/api/products/delete/${id}`,
+          {
+            headers : {
+              Authorization : `Bearer ${userInfo.token}`
+          }
+          }
+        )   ;
+        return response.data;
+      } catch (error) {
+        throw error;
+      }
+    },
+    onSuccess : () => {
+      queryClient.invalidateQueries(['products']);
+      toast.success("Deleted Successfully");
+    },
+    onError : (err) => {
+      toast.error(err.response.data.message);
+    }
+  })
+
   return (
     <HelmetProvider>
         <Helmet>
@@ -89,8 +113,8 @@ export default function ProductListPage() {
                                                 and remove your data from our servers.
                                             </DialogDescription> 
                                             </DialogHeader>
-                                            <Button onClick={()=>{
-                                                console.log("Item deleted");
+                                            <Button onClick={ async()=>{
+                                                await deleteItemMutation(item._id);
                                                 window.location.reload();
                                             }} variant='destructive' className='mt-3'>Delete</Button>
                                         </DialogContent>
