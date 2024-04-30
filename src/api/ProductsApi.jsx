@@ -15,7 +15,6 @@ export const getAllProductsApi = async () => {
 export const getProductByID = async (id) => {
     try {
         const respone = await axios.get(`${proxy}/api/products/${id}`);
-        console.log(respone.data);
         return respone.data;
     } catch (error) {
         throw error;
