@@ -34,6 +34,7 @@
     "react-hook-form": "^7.51.3",
     "react-paypal-js": "^0.0.1-security",
     "react-router-dom": "^6.23.0",
+    "recharts": "^2.12.6",
     "sonner": "^1.4.41",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
