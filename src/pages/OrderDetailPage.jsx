@@ -1,5 +1,6 @@
 import { getOrderByIdApi } from '@/api/OderApi';
 import { Alert, AlertTitle } from '@/components/ui/alert';
+import { Button } from '@/components/ui/button';
 import { Card, CardDescription, CardTitle } from '@/components/ui/card';
 import UserNavbar from '@/components/ui/myComponents/UserNavbar';
 import { Store } from '@/utils/Store';
@@ -13,6 +14,7 @@ import React, { useContext } from 'react'
 import { useEffect } from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
+import { toast } from 'sonner';
 
 export default function OrderDetailPage() {
   UseAuthRedirect();
@@ -26,6 +28,9 @@ export default function OrderDetailPage() {
     queryKey: ['order',{id}], 
     queryFn: ()=>getOrderByIdApi(id,userInfo.token) 
   });
+
+  console.log(order);
+
 
   const {data:payPalId} = useQuery({ 
     queryKey: ['paypal'], 
@@ -101,6 +106,34 @@ export default function OrderDetailPage() {
     loadPaypalScript();
   },[paypalDispatch])
 
+  const  deliverOrderHandler = async (order_id) => {
+    await updateIsDeliverMutation(order_id);
+  }
+
+  const { mutateAsync : updateIsDeliverMutation } = useMutation({
+    mutationFn : async (id)=>{
+      try {
+        const response = await axios.put(`${proxy}/api/orders/deliver/${id}`,
+          null,
+          {
+            headers : {
+              authorization : `Bearer ${userInfo.token}`
+          }
+          }
+        )   
+      } catch (error) {
+        throw error;
+      }
+    },
+    onSuccess : () => {
+      queryClient.invalidateQueries(['order']);
+      toast.success("Order Deliver Successfully");
+    },
+    onError : (err) => {
+      toast.error(err.response.data.message);
+    }
+  })
+
   if (isLoading) {
     return <p>Loading..</p>
   }
@@ -111,7 +144,7 @@ export default function OrderDetailPage() {
     </Helmet>
     <UserNavbar />
     <div className='flex flex-col justify-start items-center h-screen p-3 '>
-        <Card className=' w-full sm:w-96 lg:w-1/2 px-3 py-9 '>
+        <Card className=' w-full sm:w-96 lg:w-1/2 px-3 py-9  mb-9'>
             <div>
                 <CardTitle>Your Order Detail </CardTitle>
                 <CardDescription>Order ID : {order?._id} </CardDescription>
@@ -133,8 +166,8 @@ export default function OrderDetailPage() {
                             </span>
                         </div>
                       {
-                        order?.isDelivererd ? 
-                        <Alert>
+                        order?.isDelivered ? 
+                        <Alert className='border-green-600 bg-green-100'>
                           <Check className="h-4 w-4" />
                           <AlertTitle>Already Deliver</AlertTitle>
                         </Alert>
@@ -212,6 +245,10 @@ export default function OrderDetailPage() {
                         >
                         </PayPalButtons>
                        } 
+                       {
+                        order?.isPaid && !order.isDelivered &&
+                        <Button  onClick={()=>deliverOrderHandler(id)}  className='w-full'>DELIVER</Button>
+                       }
                     </Card>
                 </div>
             </div>
