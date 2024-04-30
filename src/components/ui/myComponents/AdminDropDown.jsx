@@ -1,7 +1,7 @@
 import { dailogAnimation } from '@/utils/Animation';
 import { Store } from '@/utils/Store';
 import { AnimatePresence, motion } from 'framer-motion';
-import { DatabaseIcon, PackageSearch, ShoppingBag } from 'lucide-react';
+import { DatabaseIcon, PackageSearch, ShoppingBag, UserPlus2Icon } from 'lucide-react';
 import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom';
 
@@ -31,7 +31,7 @@ export default function AdminDropDown() {
                     initial = "hidden"
                     animate = "visible"
                     exit="exit"
-                 className='w-48 rounded-lg shadow-lg absolute right-1 -bottom-[350px] border-2  bg-white p-1 gap-1 flex flex-col'>
+                 className='w-48 rounded-lg shadow-lg absolute right-1 -bottom-[410px] border-2  bg-white p-1 gap-1 flex flex-col'>
                      <Link to={`/dashboard`}>
                         <div className='hover:bg-gray-100 p-3 rounded-lg flex  items-center justify-between'>
                             <h5 className=' text-gray-600'>Dashboard</h5>
@@ -40,7 +40,7 @@ export default function AdminDropDown() {
                     </Link>
                     <Link to={`/products`}>
                         <div className='hover:bg-gray-100 p-3 rounded-lg flex  items-center justify-between'>
-                            <h5 className=' text-gray-600'>Products</h5>
+                            <h5 className=' text-gray-600'>All Products</h5>
                             <PackageSearch />
                         </div>
                     </Link>
@@ -48,6 +48,12 @@ export default function AdminDropDown() {
                         <div className='hover:bg-gray-100 p-3 rounded-lg flex  items-center justify-between'>
                             <h5 className='text-gray-600'> All Order</h5>
                             <ShoppingBag />
+                        </div>
+                    </Link>
+                    <Link to={`/allUsers`}>
+                        <div className='hover:bg-gray-100 p-3 rounded-lg flex  items-center justify-between'>
+                            <h5 className='text-gray-600'> All Users</h5>
+                            <UserPlus2Icon />
                         </div>
                     </Link>
                     <Link to={`/profile`}>
