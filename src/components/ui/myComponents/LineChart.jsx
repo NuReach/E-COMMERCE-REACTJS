@@ -1,38 +1,9 @@
 import React from 'react';
 import { AreaChart, CartesianGrid, XAxis, YAxis, Tooltip, Area, ResponsiveContainer } from 'recharts';
 
-const data = [
-  {
-    "name": "Page A",
-    "uv": 4000
-  },
-  {
-    "name": "Page B",
-    "uv": 3000
-  },
-  {
-    "name": "Page C",
-    "uv": 2000
-  },
-  {
-    "name": "Page D",
-    "uv": 2780
-  },
-  {
-    "name": "Page E",
-    "uv": 1890
-  },
-  {
-    "name": "Page F",
-    "uv": 2390
-  },
-  {
-    "name": "Page G",
-    "uv": 3490
-  }
-];
 
-const LineChart = () => {
+
+const LineChart = ({data}) => {
   return (
     <ResponsiveContainer width="100%" height="100%" >
       <AreaChart  data={data}
@@ -43,11 +14,11 @@ const LineChart = () => {
             <stop offset="95%" stopColor="#8884d8" stopOpacity={0}/>
           </linearGradient>
         </defs>
-        <XAxis dataKey="name" />
+        <XAxis dataKey="_id" />
         <YAxis />
         <CartesianGrid strokeDasharray="3 3" />
         <Tooltip />
-        <Area type="monotone" dataKey="uv" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
+        <Area type="monotone" dataKey="orders" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
       </AreaChart>
     </ResponsiveContainer>
   );

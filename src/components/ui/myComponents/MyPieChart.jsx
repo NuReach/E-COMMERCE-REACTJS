@@ -1,13 +1,6 @@
 import React from "react";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 
-const data = [
-  { name: "Group A", value: 400 },
-  { name: "Group B", value: 300 },
-  { name: "Group C", value: 300 },
-  { name: "Group D", value: 200 }
-];
-
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
 const RADIAN = Math.PI / 180;
@@ -19,7 +12,7 @@ const renderCustomizedLabel = ({
   outerRadius,
   percent,
   index,
-  name
+  _id
 }) => {
   const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
   const x = cx + radius * Math.cos(-midAngle * RADIAN);
@@ -33,15 +26,15 @@ const renderCustomizedLabel = ({
       textAnchor={x > cx ? "start" : "end"}
       dominantBaseline="central"
       lengthAdjust="spacingAndGlyphs"
-      textLength={90} // Adjust the text length as needed
+      textLength={60} // Adjust the text length as needed
       style={{ whiteSpace: "pre-line" }} // Set white-space to pre-line for line wrapping
     >
-      {`${(percent * 100).toFixed(0)}% ${name} `}
+      {`${(percent * 100).toFixed(0)}% ${_id} `}
     </text>
   );
 };
 
-const MyPieChart = () => {
+const MyPieChart = ({data}) => {
   return (
     <ResponsiveContainer  width="100%" height="100%" >
     <PieChart >
@@ -53,7 +46,7 @@ const MyPieChart = () => {
         label={renderCustomizedLabel}
         outerRadius={250}
         fill="#8884d8"
-        dataKey="value"
+        dataKey="count"
       >
         {data.map((entry, index) => (
           <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
