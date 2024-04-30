@@ -12,7 +12,7 @@ export default function UserNavbar() {
   const { cart } = state;
   const { userInfo } = state;
   return (
-    <div className='bg-black p-3 flex justify-between items-center px-1 md:px-9'>
+    <div className='bg-black py-6  flex justify-between items-center px-1 md:px-9'>
         <div className='flex gap-3'>
           <SheetLeft  />
           <Link to={`/`}>

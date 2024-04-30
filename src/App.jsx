@@ -20,6 +20,7 @@ import Dashboard from "./pages/Admin/Dashboard"
 import ProductListPage from "./pages/Admin/ProductListPage"
 import ProductEditePage from "./pages/Admin/ProductEditePage"
 import ProductCreatePage from "./pages/Admin/ProductCreatePage"
+import AdminOrderListPage from "./pages/Admin/AdminOrderListPage"
 
 function App() {
   const queryClient = new QueryClient()
@@ -43,6 +44,7 @@ function App() {
             <Route path="/products" element={<ProductListPage />} />
             <Route path="/products/create" element={<ProductCreatePage />} />
             <Route path="/products/edite/:id" element={<ProductEditePage />} />
+            <Route path="/allOrders" element={<AdminOrderListPage />} />
           </Route>
           
           <Route path="/" element={<HomePage />} />
