@@ -38,7 +38,7 @@ export default function UserListPage() {
   const { mutateAsync : deleteItemMutation } = useMutation({
     mutationFn : async (id)=>{
       try {
-        const response = await axios.delete(`${proxy}/api/orders/delete/${id}`,
+        const response = await axios.delete(`${proxy}/api/users/delete/${id}`,
           {
             headers : {
               Authorization : `Bearer ${userInfo.token}`
@@ -51,7 +51,7 @@ export default function UserListPage() {
       }
     },
     onSuccess : () => {
-      queryClient.invalidateQueries(['orders']);
+      queryClient.invalidateQueries(['users']);
       toast.success("Deleted Successfully");
     },
     onError : (err) => {

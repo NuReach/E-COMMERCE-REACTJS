@@ -12,6 +12,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import axios from "axios";
+import { proxy } from "@/utils/Utils";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 
 export function RegisterForm() {
@@ -47,9 +52,40 @@ const FormSchema = z.object({
     },
   });
 
-  function onSubmit(data) {
-    console.log(data);
+
+  const  onSubmit = async (data) => {
+    await createUserMutation(data);
   }
+
+  const navigate = useNavigate();
+
+  
+  const { mutateAsync : createUserMutation } = useMutation({
+    mutationFn : async (state) => {
+        try {
+            const response = await axios.post(
+                `${proxy}/api/users/register`,
+                {
+                    name : state.username,
+                    email : state.email,
+                    password : state.password,
+                }
+            );
+            console.log(response.data);
+            return response.data;
+            
+        } catch (error) {
+            throw error;
+        }
+    },
+    onSuccess : (res) => {
+      toast.success("Created Successfully");
+      navigate("/signin")
+    },
+    onError : (err) => {
+      toast.error(err.response.data.message);
+    }
+  })
 
   return (
     <Form {...form}>
