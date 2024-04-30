@@ -54,7 +54,7 @@ export default function SheetLeft() {
         <div className='mt-3 gap-3 flex flex-col'>
           {
             categories?.map((item,i)=>(
-            <Link  to={`/search/result?category=${item}&&query=${query}&&min=${min}&&max=${max}&&rating=${rating}&&order=${order}&&page=${page}`} key={i} className='border-b-2 cursor-pointer text-sm'>
+            <Link  to={`/search/result?category=${item}&&query=${query}&&min=${min}&&max=${max}&&rating=${rating}&&order=${order}&&page=${page}`} key={i} className='border-b-2 cursor-pointer text-sm capitalize'>
                 {item}
             </Link>
             ))

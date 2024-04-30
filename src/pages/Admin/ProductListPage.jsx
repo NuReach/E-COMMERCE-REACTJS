@@ -54,7 +54,10 @@ export default function ProductListPage() {
         <UserNavbar />
         <div className='w-full flex justify-center '>
             <div className='w-10/12 mt-3 flex flex-col '>
-                <h1>Product List</h1>
+                <div className='w-full flex my-3 justify-between'>
+                    <h1>Product List</h1>
+                    <Button onClick={()=>navigate('/products/create')}>Create</Button>
+                </div>
                 <div className='w-full rounded-lg p-3 border-2 flex flex-col gap-6'>
                     <div className='flex w-full justify-between gap-3 border-b-2 pb-3'>
                         <h5 className=' w-10 sm:w-44 lg:60 line-clamp-1 '>ID</h5>
