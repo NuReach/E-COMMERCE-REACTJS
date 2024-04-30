@@ -17,6 +17,8 @@ import SearchResultPage from "./pages/SearchResultPage"
 import { Store } from "./utils/Store"
 import { useContext } from "react"
 import Dashboard from "./pages/Admin/Dashboard"
+import ProductListPage from "./pages/Admin/ProductListPage"
+import ProductEditePage from "./pages/Admin/ProductEditePage"
 
 function App() {
   const queryClient = new QueryClient()
@@ -37,6 +39,8 @@ function App() {
           </Route>
           <Route element={<AdminProtectedRouter />}>
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/products" element={<ProductListPage />} />
+            <Route path="/products/edite/:id" element={<ProductEditePage />} />
           </Route>
           
           <Route path="/" element={<HomePage />} />

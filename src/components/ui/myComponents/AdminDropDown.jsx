@@ -1,7 +1,7 @@
 import { dailogAnimation } from '@/utils/Animation';
 import { Store } from '@/utils/Store';
 import { AnimatePresence, motion } from 'framer-motion';
-import { DatabaseIcon } from 'lucide-react';
+import { DatabaseIcon, PackageSearch } from 'lucide-react';
 import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom';
 
@@ -31,11 +31,17 @@ export default function AdminDropDown() {
                     initial = "hidden"
                     animate = "visible"
                     exit="exit"
-                 className='w-48 rounded-lg shadow-lg absolute right-1 -bottom-[250px] border-2  bg-white p-1 gap-1 flex flex-col'>
+                 className='w-48 rounded-lg shadow-lg absolute right-1 -bottom-[300px] border-2  bg-white p-1 gap-1 flex flex-col'>
                      <Link to={`/dashboard`}>
                         <div className='hover:bg-gray-100 p-3 rounded-lg flex  items-center justify-between'>
                             <h5 className=' text-gray-600'>Dashboard</h5>
                             <DatabaseIcon />
+                        </div>
+                    </Link>
+                    <Link to={`/products`}>
+                        <div className='hover:bg-gray-100 p-3 rounded-lg flex  items-center justify-between'>
+                            <h5 className=' text-gray-600'>Products</h5>
+                            <PackageSearch />
                         </div>
                     </Link>
                     <Link to={`/profile`}>
