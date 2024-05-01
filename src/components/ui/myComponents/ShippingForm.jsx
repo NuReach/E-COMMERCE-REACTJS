@@ -148,7 +148,7 @@ export default function ShippingForm() {
           </FormItem>
                   )}
         />
-        <p className="mt-3 pl-3">{locationLink}</p>
+        <p className="p-3 mt-3">{locationLink}</p>
         </div>
         }
 

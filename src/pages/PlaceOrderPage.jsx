@@ -81,7 +81,7 @@ export default function PlaceOrderPage() {
                         </div>
                         <div className="flex justify-between mb-2 border-b-2 pb-1 mt-3 gap-3">
                             <span className="text-sm">Location</span>
-                            <span className="font-semibold text-lg capitalize  text-nowrap overflow-hidden">{cart.shippingAddress.location}</span>
+                            <span className="font-semibold text-xs capitalize  text-nowrap overflow-hidden">{cart.shippingAddress.location}</span>
                         </div>
                         
                         <Badge className='cursor-pointer bg-yellow-600'>Edit</Badge>

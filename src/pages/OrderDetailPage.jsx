@@ -29,8 +29,6 @@ export default function OrderDetailPage() {
     queryFn: ()=>getOrderByIdApi(id,userInfo.token) 
   });
 
-  console.log(order);
-
 
   const {data:payPalId} = useQuery({ 
     queryKey: ['paypal'], 
@@ -167,7 +165,7 @@ export default function OrderDetailPage() {
                         </div>
                         <div className="flex justify-between mb-2 border-b-2 pb-1 mt-3 gap-3">
                             <span className="text-sm">Location</span>
-                            <span className="font-semibold text-lg capitalize  text-nowrap overflow-hidden">{order?.shippingAddress.location}</span>
+                            <span className="font-semibold text-xs capitalize  text-nowrap overflow-hidden">{order?.shippingAddress.location}</span>
                         </div>
                       {
                         order?.isDelivered ? 
