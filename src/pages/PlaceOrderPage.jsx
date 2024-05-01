@@ -71,14 +71,19 @@ export default function PlaceOrderPage() {
                             <span className="text-sm">Name</span>
                             <span className="font-semibold text-lg capitalize">{cart.shippingAddress.fullname}</span>
                         </div>
-                        <div className="flex justify-between mb-2 border-b-2 pb-1 ">
+                        <div className="flex justify-between mb-2 border-b-2 pb-1 gap-3">
                             <span className="text-sm">Address</span>
-                            <span className="font-semibold text-lg capitalize line-clamp-1">{cart.shippingAddress.address},
+                            <span className="font-semibold text-lg capitalize text-nowrap overflow-hidden text-ellipsis">{cart.shippingAddress.address},
                             {cart.shippingAddress.postalCode},
                             {cart.shippingAddress.city},
                             {cart.shippingAddress.country}
                             </span>
                         </div>
+                        <div className="flex justify-between mb-2 border-b-2 pb-1 mt-3 gap-3">
+                            <span className="text-sm">Location</span>
+                            <span className="font-semibold text-lg capitalize  text-nowrap overflow-hidden">{cart.shippingAddress.location}</span>
+                        </div>
+                        
                         <Badge className='cursor-pointer bg-yellow-600'>Edit</Badge>
                     </Card>
                     <Card className='p-3'>

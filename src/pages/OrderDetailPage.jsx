@@ -159,11 +159,15 @@ export default function OrderDetailPage() {
                         </div>
                         <div className="flex justify-between mb-2 border-b-2 pb-1 gap-3">
                             <span className="text-sm">Address</span>
-                            <span className="font-semibold text-lg capitalize line-clamp-1">{order?.shippingAddress.address},
+                            <span className="font-semibold text-lg capitalize text-nowrap overflow-hidden text-ellipsis">{order?.shippingAddress.address},
                             {order?.shippingAddress.postalCode},
                             {order?.shippingAddress.city},
                             {order?.shippingAddress.country}
                             </span>
+                        </div>
+                        <div className="flex justify-between mb-2 border-b-2 pb-1 mt-3 gap-3">
+                            <span className="text-sm">Location</span>
+                            <span className="font-semibold text-lg capitalize  text-nowrap overflow-hidden">{order?.shippingAddress.location}</span>
                         </div>
                       {
                         order?.isDelivered ? 
@@ -246,7 +250,7 @@ export default function OrderDetailPage() {
                         </PayPalButtons>
                        } 
                        {
-                        order?.isPaid && !order.isDelivered &&
+                        order?.isPaid && !order.isDelivered && userInfo.isAdmin &&
                         <Button  onClick={()=>deliverOrderHandler(id)}  className='w-full'>DELIVER</Button>
                        }
                     </Card>

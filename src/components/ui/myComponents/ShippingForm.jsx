@@ -5,15 +5,21 @@ import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Store } from "@/utils/Store";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import LeafletMap from "./LeafletMap";
 
 export default function ShippingForm() {
 
   const { state , dispatch : ctxDispatch } = useContext(Store);
   const { cart : {shippingAddress}} = state;
+  const [location ,setLocation] = useState(null);
+  const [locationLink , setLocationLink] = useState(null);
   const navigate = useNavigate();
 
+  useEffect(()=>{
+    setLocationLink(`https://www.google.com/maps?q=${location?.lat},${location?.lng}`)
+  },[location]);
 
   const FormSchema = z.object({
     fullname: z.string().min(3, {
@@ -31,6 +37,7 @@ export default function ShippingForm() {
     country: z.string().nonempty({
       message: "Country is required.",
     }),
+    location : z.string(),
   });
   const form = useForm({
     resolver: zodResolver(FormSchema),
@@ -40,10 +47,13 @@ export default function ShippingForm() {
         city: shippingAddress ? shippingAddress.city : "",
         postalCode: shippingAddress ? shippingAddress.postalCode : "",
         country: shippingAddress ? shippingAddress.country : "",
+        location : shippingAddress ? shippingAddress.location : "",
     },
   });
 
+
   function onSubmit(data) {
+    data.location = locationLink;
     ctxDispatch({
         type:"SAVE_SHIPPING_ADDRESS",
         payload : data
@@ -120,6 +130,29 @@ export default function ShippingForm() {
             </FormItem>
           )}
         />
+        {
+          location &&
+          <div>
+          <FormField
+          control={form.control}
+          name="location"
+          render={({ field }) => (
+          <FormItem className="w-full">
+            <FormLabel>Location</FormLabel>
+            <FormControl>
+              <Input type="text" disabled placeholder={locationLink}
+              {...field} 
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+                  )}
+        />
+        <p className="mt-3 pl-3">{locationLink}</p>
+        </div>
+        }
+
+        <LeafletMap setLocation={setLocation} />
         <div className="w-full flex justify-end">
           <Button type="submit" className=" w-32">
             Next
